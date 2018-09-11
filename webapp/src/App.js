@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import SearchBar from './components/SearchBar';
 import Card from './components/Card';
+import Footer from './components/Footer';
 import { Pie } from 'react-chartjs-2';
 import './App.css';
 import Spinner from './spinner.svg';
@@ -9,6 +10,7 @@ class App extends Component {
   
   state = {
     data: [0, 0, 0],
+    tweets: null,
     networking: false
   }
 
@@ -27,14 +29,22 @@ class App extends Component {
     let neg = 0;
     let nue = 0;
     for(let i=0; i<res.length; i++) {
-      if(res[i].polarity>=0.4)
+      if(res[i].polarity>=0.25)
         pos++;
-      else if(res[i].polarity<=-0.4)
+      else if(res[i].polarity<=-0.25)
         neg++;
       else
         nue++;
     }
-    this.setState({data: [pos, neg, nue], networking: false});
+    this.setState({data: [pos, neg, nue], networking: false, tweets: res});
+  }
+
+  renderTweets = () => {
+    if(this.state.tweets) {
+      return this.state.tweets.map((tweet) => {
+        return <Card tweet={tweet.text} author={tweet.author} polarity={tweet.polarity} key={Math.random()*10000}/>
+      })
+    }
   }
   
   render() {
@@ -63,7 +73,7 @@ class App extends Component {
         <div className='container'>
           <div style={{marginTop: 20, marginBottom: 25}}>
             <h1 className='text-center'>Twitter Sentiment Analyser For Business</h1>
-            <h5 className='text-center'>Search for Topics and Hashtags and get labelled data.</h5>
+            <h5 className='text-center'>Search for Topics and Hashtags and get labelled data. (100 Most Recent Tweets)</h5>
           </div>
           <div className='row'>
               <SearchBar submitHandler={this.analyseTweets}/>
@@ -80,11 +90,12 @@ class App extends Component {
               data = {data} 
             />
             <div style={{marginTop: 35}}>
-              <h3 className='text-center' style={{marginBottom: 25}}>Top Tweets</h3>
-              <Card/>
+              <h3 className='text-center' style={{marginBottom: 25}}>Recent Tweets</h3>
+              {this.renderTweets()}
             </div>
           </div>
           }
+          <Footer />
         </div>
       </div>
     );

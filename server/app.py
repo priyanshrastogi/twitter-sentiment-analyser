@@ -28,11 +28,11 @@ def home():
 @app.route('/analyse', methods=['GET'])
 def analyse():
     if request.args.get('hashtag') == 'true':
-        tweets = api.search('#{}'.format(request.args.get('search')), lang='en')
+        tweets = api.search('#{}'.format(request.args.get('search')), lang='en', count=100)
     else:
-        tweets = api.search(request.args.get('search'), lang='en')
+        tweets = api.search(q=request.args.get('search'), lang='en', count=100)
     res = []
     for tweet in tweets:
         sentiment = TextBlob(tweet.text).sentiment
-        res.append({'text': tweet.text, 'subjectivity': sentiment.subjectivity, 'polarity': sentiment.polarity})
+        res.append({'text': tweet.text, 'subjectivity': sentiment.subjectivity, 'polarity': sentiment.polarity, 'author': tweet.user.screen_name})
     return jsonify(res)
