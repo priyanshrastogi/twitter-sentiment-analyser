@@ -22,7 +22,7 @@ class App extends Component {
     this.setState({networking: true});
     if(event)
       event.preventDefault();
-    let res = await fetch(search.startsWith('#') ? `http://localhost:5000/analyse?search=${search.substring(1)}&hashtag=true` : `http://localhost:5000/analyse?search=${search}&hashtag=false`);
+    let res = await fetch(search.startsWith('#') ? `https://twitter-sentlyser.herokuapp.com/analyse?search=${search.substring(1)}&hashtag=true` : `https://twitter-sentlyser.herokuapp.com/analyse?search=${search}&hashtag=false`);
     res = await res.json();
     console.log(res);
     let pos = 0;
@@ -81,7 +81,7 @@ class App extends Component {
           {this.state.networking ? 
           <div style={{marginTop: 25}}>
             <p className='text-center'>Fetching Tweets, Analysing Sentiments, Calculating Summary...</p>
-            <img src={`${Spinner}`} style={{ display: 'block', marginLeft: 'auto', marginRight:'auto'}} />
+            <img src={`${Spinner}`} style={{ display: 'block', marginLeft: 'auto', marginRight:'auto'}} alt="Spinner"/>
           </div>
           :
           <div style={{marginTop: 25}}>

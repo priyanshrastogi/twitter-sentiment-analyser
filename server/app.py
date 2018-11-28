@@ -4,10 +4,10 @@ import tweepy
 from textblob import TextBlob
 
 # Twitter OAuth Tokens and Keys
-consumer_key = 'sjUItYap4WnMEICAHjyEKSNHC'
-consumer_secret = 'ZTkpRKQA2M735ma3rE4XDNZh4bPEhNYvwpSOwxvdK4A4XNLR3k'
-access_token = '598847234-NSpUdR67EKtfNb9oB0pcoJjjEnf4x8bvVBzUjIj7'
-access_token_secret = 'DhkDStGFXizz5ZzYB2ray0EUIehJUcTQ0jIfR0nN2Qv9h'
+consumer_key = ''
+consumer_secret = ''
+access_token = ''
+access_token_secret = ''
 
 # Setting OAuth 
 auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
